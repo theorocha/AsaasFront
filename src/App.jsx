@@ -8,11 +8,7 @@ function App() {
     axios
       .get("http://localhost:8081/api/customers")
       .then((response) => {
-        if (Array.isArray(response.data.data)) {
-          setData(response.data.data);
-        } else {
-          console.error("Os dados da API não são uma matriz.");
-        }
+        setData(response.data.data);
       })
       .catch((error) => {
         console.error(error);
@@ -23,8 +19,9 @@ function App() {
     <div>
       <h1>Lista de Clientes</h1>
       <ul>
-        {Array.isArray(data) &&
-          data.map((customer) => <li key={customer.id}>{customer.name}</li>)}
+        {data.map((customer) => (
+          <li key={customer.id}>{customer.name}</li>
+        ))}
       </ul>
     </div>
   );
