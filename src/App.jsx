@@ -6,9 +6,13 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("/api/customers")
+      .get("http://localhost:8081/api/customers")
       .then((response) => {
-        setData(response.data);
+        if (Array.isArray(response.data.data)) {
+          setData(response.data.data);
+        } else {
+          console.error("Os dados da API não são uma matriz.");
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -19,9 +23,8 @@ function App() {
     <div>
       <h1>Lista de Clientes</h1>
       <ul>
-        {data.map((customer) => (
-          <li key={customer.id}>{customer.name}</li>
-        ))}
+        {Array.isArray(data) &&
+          data.map((customer) => <li key={customer.id}>{customer.name}</li>)}
       </ul>
     </div>
   );
