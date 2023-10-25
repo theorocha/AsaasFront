@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import CustomerForm from "./customer/CustomerForm";
 
 function App() {
   const [data, setData] = useState([]);
@@ -23,6 +24,7 @@ function App() {
           <li key={customer.id}>{customer.name}</li>
         ))}
       </ul>
+      <CustomerForm />
     </div>
   );
 }
