@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import CustomerForm from "./customer/CustomerForm";
+import PaymentList from "./payments/PaymentsList";
 
 function App() {
   const [data, setData] = useState([]);
@@ -25,6 +26,7 @@ function App() {
         ))}
       </ul>
       <CustomerForm />
+      <PaymentList />
     </div>
   );
 }
