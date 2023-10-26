@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import CustomerForm from "./customer/CustomerForm";
 import PaymentList from "./payments/PaymentsList";
+import PaymentForm from "./payments/PaymentForm";
 
 function App() {
   const [data, setData] = useState([]);
@@ -22,11 +23,14 @@ function App() {
       <h1>Lista de Clientes</h1>
       <ul>
         {data.map((customer) => (
-          <li key={customer.id}>{customer.name}</li>
+          <li key={customer.id}>
+            {customer.id}-{customer.name}
+          </li>
         ))}
       </ul>
       <CustomerForm />
       <PaymentList />
+      <PaymentForm />
     </div>
   );
 }

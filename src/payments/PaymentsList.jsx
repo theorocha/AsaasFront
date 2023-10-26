@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { getCustomerNameById } from "../Apis/CustomerAPIs";
+import { getCustomerNameById } from "../apis/CustomerAPIs";
 import axios from "axios";
+import PaymentAct from "./PaymentAct";
 
 function PaymentList() {
   const [data, setData] = useState([]);
@@ -35,9 +36,11 @@ function PaymentList() {
       <h1>Lista de Cobranças</h1>
       <ul>
         {data.map((cobranca) => (
-          <li key={cobranca.customer}>
-            {customerNames[cobranca.customer]} - {cobranca.value} -{" "}
-            {cobranca.status}
+          <li key={cobranca.id}>
+            {customerNames[cobranca.customer]}- {cobranca.customer} -
+            {cobranca.billingType} - {cobranca.value} - {cobranca.status}-
+            {cobranca.id}
+            <PaymentAct billingType={cobranca.billingType} id={cobranca.id} />
           </li>
         ))}
       </ul>
