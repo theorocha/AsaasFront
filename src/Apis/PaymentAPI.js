@@ -12,6 +12,18 @@ export const generatePixQRCode = (id) => {
     });
 };
 
+export const generateBoletoCode = (id) => {
+  return axios
+    .get(`http://localhost:8081/api/generate-boleto/${id}`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      throw error;
+    });
+};
+
 export const payPixQRCode = (postData) => {
   return axios
     .post("http://localhost:8081/api/pix-payment", postData, {

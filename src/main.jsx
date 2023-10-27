@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import CustomerForm from "./customer/CustomerForm.jsx";
 import "./global.css";
 import PaymentList from "./payments/PaymentsList.jsx";
+import PaymentForm from "./payments/PaymentForm.jsx";
 import CustomerList from "./customer/CustomerList.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "/payments",
     element: <PaymentList />,
+  },
+  {
+    path: "/newPayment",
+    element: <PaymentForm />,
   },
 ]);
 

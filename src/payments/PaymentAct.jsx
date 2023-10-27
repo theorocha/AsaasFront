@@ -1,16 +1,21 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { generatePixQRCode, payPixQRCode } from "../apis/PaymentAPI";
+import {
+  generatePixQRCode,
+  payPixQRCode,
+  generateBoletoCode,
+} from "../apis/PaymentAPI";
 import { Button } from "react-bootstrap";
 
 function PaymentAct({ billingType, id, value }) {
   PaymentAct.propTypes = {
     billingType: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired,
   };
 
   const [isQrCodeGenerated, setIsQrCodeGenerated] = useState(false);
+  const [isBoletoGenerated, setIsBoletoGenerated] = useState(false);
   const [payload, setPayload] = useState(null);
   const [pago, setPago] = useState(false);
 
@@ -29,6 +34,23 @@ function PaymentAct({ billingType, id, value }) {
         alert("Erro ao gerar QR Code.");
         console.error(error);
         setIsQrCodeGenerated(false);
+      });
+  };
+
+  const generateBoleto = () => {
+    generateBoletoCode(id)
+      .then((boletoData) => {
+        setIsBoletoGenerated(true);
+        console.log("Boleto gerado com sucesso:", boletoData);
+        const link = document.createElement("a");
+        link.href = `data:text/plain;charset=utf-8,${boletoData.barCode}`;
+        link.download = "boleto.txt";
+        link.click();
+      })
+      .catch((error) => {
+        alert("Erro ao gerar boleto.");
+        console.error(error);
+        setIsBoletoGenerated(false);
       });
   };
 
@@ -59,16 +81,17 @@ function PaymentAct({ billingType, id, value }) {
           {isQrCodeGenerated ? (
             !pago ? (
               <>
-                <button disabled className="btn btn-success">
+                <Button disabled className="btn btn-success">
                   QRCode baixado com sucesso.
-                </button>
-                <button
+                </Button>
+                <Button
                   style={{ fontSize: "15px" }}
                   className="btn btn-primary ms-3"
                   onClick={handlePagamento}
+                  disabled
                 >
                   Confirmar Pagamento!
-                </button>
+                </Button>
               </>
             ) : (
               <Button disabled className="btn btn-sucess">
@@ -77,19 +100,36 @@ function PaymentAct({ billingType, id, value }) {
             )
           ) : (
             <div>
-              <button
+              <Button
                 className="btn btn-primary"
                 onClick={generateQrCode}
                 style={{ fontSize: "12px", padding: "5px 10px" }}
               >
                 Gerar QRCode
-              </button>
+              </Button>
             </div>
           )}
         </div>
       )}
-      {billingType !== "PIX" && (
-        <div>Nenhum QRCode disponível para essa forma de pagamento.</div>
+      {billingType === "BOLETO" && (
+        <div>
+          {!isBoletoGenerated ? (
+            <Button
+              className="btn btn-primary"
+              onClick={generateBoleto}
+              style={{ fontSize: "12px", padding: "5px 10px" }}
+            >
+              Gerar Boleto
+            </Button>
+          ) : (
+            <Button disabled className="btn btn-success">
+              Boleto gerado com sucesso.
+            </Button>
+          )}
+        </div>
+      )}
+      {billingType !== "PIX" && billingType !== "BOLETO" && (
+        <div>Nenhuma ação disponível para essa forma de pagamento.</div>
       )}
     </div>
   );

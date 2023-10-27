@@ -4,6 +4,8 @@ import Table from "react-bootstrap/Table";
 import getCustomerNameById from "../apis/CustomerAPIs";
 import PageTemplate from "../components/PageTemplate";
 import PaymentAct from "./PaymentAct";
+import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 function PaymentList() {
   const [data, setData] = useState([]);
@@ -42,6 +44,9 @@ function PaymentList() {
       <div style={{ width: "100%" }}>
         <div className="d-flex justify-content-between align-items-center mb-3">
           <h1>Lista de Cobranças</h1>
+          <Link to="/newPayment">
+            <Button variant="primary">Nova Cobrança</Button>
+          </Link>
         </div>
         <Table striped bordered hover>
           <thead>
