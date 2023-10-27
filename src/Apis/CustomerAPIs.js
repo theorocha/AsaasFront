@@ -1,4 +1,3 @@
-// Em um arquivo de utilitário ou serviço separado
 import axios from "axios";
 
 export async function getCustomerNameById(customerId) {

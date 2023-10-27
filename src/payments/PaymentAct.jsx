@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useState } from "react";
 import { generatePixQRCode } from "../apis/PaymentAPI";
 
 function PaymentAct({ billingType, id }) {
