@@ -1,5 +1,6 @@
-import { useState } from "react";
 import axios from "axios";
+import { useState } from "react";
+import { Button, Form } from "react-bootstrap";
 import PageTemplate from "../components/PageTemplate";
 
 function CustomerForm() {
@@ -24,7 +25,7 @@ function CustomerForm() {
     axios
       .post("http://localhost:8081/api/customers", formData)
       .then(function (response) {
-        alert("Cliente criado com sucesso.");
+        alert(`Cliente com id ${response.data.id} criado com sucesso.`);
         console.log(response);
       })
       .catch(function (error) {
@@ -37,58 +38,60 @@ function CustomerForm() {
     <PageTemplate>
       <div>
         <h2>Criar Novo Cliente</h2>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="name">Nome:</label>
-            <input
+        <Form onSubmit={handleSubmit}>
+          <Form.Group>
+            <Form.Label>Nome:</Form.Label>
+            <Form.Control
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
               required
             />
-          </div>
-          <div>
-            <label htmlFor="cpfCnpj">CPF/CNPJ:</label>
-            <input
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>CPF/CNPJ:</Form.Label>
+            <Form.Control
               type="text"
               name="cpfCnpj"
               value={formData.cpfCnpj}
               onChange={handleChange}
               required
             />
-          </div>
-          <div>
-            <label htmlFor="email">E-mail:</label>
-            <input
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>E-mail:</Form.Label>
+            <Form.Control
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
               required
             />
-          </div>
-          <div>
-            <label htmlFor="phone">Celular:</label>
-            <input
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Celular:</Form.Label>
+            <Form.Control
               type="text"
               name="mobilePhone"
               value={formData.mobilePhone}
               onChange={handleChange}
             />
-          </div>
-          <div>
-            <label htmlFor="postalCode">CEP:</label>
-            <input
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>CEP:</Form.Label>
+            <Form.Control
               type="text"
               name="postalCode"
               value={formData.postalCode}
               onChange={handleChange}
               required
             />
-          </div>
-          <button type="submit">Criar Cliente</button>
-        </form>
+          </Form.Group>
+          <Button className="mt-3" type="submit" variant="primary">
+            Criar Cliente
+          </Button>
+        </Form>
       </div>
     </PageTemplate>
   );

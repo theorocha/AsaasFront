@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
-import { getCustomerNameById } from "../apis/CustomerAPIs";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import Table from "react-bootstrap/Table";
+import getCustomerNameById from "../apis/CustomerAPIs";
+import PageTemplate from "../components/PageTemplate";
 import PaymentAct from "./PaymentAct";
 
 function PaymentList() {
@@ -31,20 +33,48 @@ function PaymentList() {
     fetchCustomerNames();
   }, [data]);
 
+  const columnStyle = {
+    padding: "0.5rem 1rem",
+  };
+
   return (
-    <div>
-      <h1>Lista de Cobranças</h1>
-      <ul>
-        {data.map((cobranca) => (
-          <li key={cobranca.id}>
-            {customerNames[cobranca.customer]}- {cobranca.customer} -
-            {cobranca.billingType} - {cobranca.value} - {cobranca.status}-
-            {cobranca.id}
-            <PaymentAct billingType={cobranca.billingType} id={cobranca.id} />
-          </li>
-        ))}
-      </ul>
-    </div>
+    <PageTemplate>
+      <div style={{ width: "100%" }}>
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <h1>Lista de Cobranças</h1>
+        </div>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th style={columnStyle}>Nome do Cliente</th>
+              <th style={columnStyle}>ID do Cliente</th>
+              <th style={columnStyle}>Tipo de Cobrança</th>
+              <th style={columnStyle}>Valor</th>
+              <th style={columnStyle}>Status</th>
+              <th style={columnStyle}>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((cobranca) => (
+              <tr key={cobranca.id}>
+                <td style={columnStyle}>{customerNames[cobranca.customer]}</td>
+                <td style={columnStyle}>{cobranca.customer}</td>
+                <td style={columnStyle}>{cobranca.billingType}</td>
+                <td style={columnStyle}>R${cobranca.value}</td>
+                <td style={columnStyle}>{cobranca.status}</td>
+                <td style={columnStyle}>
+                  <PaymentAct
+                    billingType={cobranca.billingType}
+                    value={cobranca.value}
+                    id={cobranca.id}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
+    </PageTemplate>
   );
 }
 

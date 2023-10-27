@@ -4,6 +4,7 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import PageTemplate from "../components/PageTemplate";
 import { Link } from "react-router-dom";
+import DeleteCustomer from "./DeleteCustomer";
 
 function CustomerList() {
   const [data, setData] = useState([]);
@@ -38,6 +39,7 @@ function CustomerList() {
               <th style={columnStyle}>ID</th>
               <th style={columnStyle}>Nome</th>
               <th style={columnStyle}>CPF</th>
+              <th style={columnStyle}>Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -46,6 +48,9 @@ function CustomerList() {
                 <td style={columnStyle}>{customer.id}</td>
                 <td style={columnStyle}>{formataNome(customer.name)}</td>
                 <td style={columnStyle}>{formatCPF(customer.cpfCnpj)}</td>
+                <td style={columnStyle}>
+                  <DeleteCustomer customerId={customer.id} />
+                </td>
               </tr>
             ))}
           </tbody>
